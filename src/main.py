@@ -3,6 +3,7 @@ import sys
 import constants as const
 from map import Map
 from player import Player
+from raycasting import RayCasting
 
 
 class Game:
@@ -16,18 +17,19 @@ class Game:
     def new_game(self) -> None:
         self.map: Map = Map(self.screen)
         self.player: Player = Player(self)
+        self.raycasting: RayCasting = RayCasting(self)
 
     def update(self) -> None:
         self.player.update()
-        print(self.player.angle)
+        self.raycasting.update()
         pg.display.flip()
         self.delta_time = self.clock.tick(const.FPS)
         pg.display.set_caption(f"{self.clock.get_fps() :.1f}")
 
     def draw(self) -> None:
         self.screen.fill('black')
-        self.map.draw()
-        self.player.draw()
+        # self.map.draw()
+        # self.player.draw()
 
     def check_events(self) -> None:
         for event in pg.event.get():
