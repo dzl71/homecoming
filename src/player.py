@@ -54,42 +54,42 @@ class Player:
 
     # test funtion
     def draw(self) -> None:
-        pg.draw.line(
-            self.game.screen,
-            'yellow',
-            (self.x * 100, self.y * 100),
-            (
-                self.x * 100 + const.WIDTH * math.cos(self.angle),
-                self.y * 100 + const.WIDTH * math.sin(self.angle)
-            ),
-            2,
-        )
+        # pg.draw.line(
+        #    self.game.screen,
+        #    'yellow',
+        #    (self.x * 100, self.y * 100),
+        #    (
+        #        self.x * 100 + const.WIDTH * math.cos(self.angle),
+        #        self.y * 100 + const.WIDTH * math.sin(self.angle)
+        #    ),
+        #    2,
+        # )
         # draw field of view
-        for i in range(1, const.RAYS_NUM // 2 + 1):
-            pg.draw.line(
-                self.game.screen,
-                'darkgray',
-                (self.x * 100, self.y * 100),
-                (
-                    self.x * 100 + const.WIDTH *
-                    math.cos(self.angle + const.DELTA_ANGLE * i),
-                    self.y * 100 + const.WIDTH *
-                    math.sin(self.angle + const.DELTA_ANGLE * i)
-                ),
-                2,
-            )
-            pg.draw.line(
-                self.game.screen,
-                'darkgray',
-                (self.x * 100, self.y * 100),
-                (
-                    self.x * 100 + const.WIDTH *
-                    math.cos(self.angle - const.DELTA_ANGLE * i),
-                    self.y * 100 + const.WIDTH *
-                    math.sin(self.angle - const.DELTA_ANGLE * i)
-                ),
-                2,
-            )
+        # for i in range(1, const.RAYS_NUM // 2 + 1):
+        #    pg.draw.line(
+        #        self.game.screen,
+        #        'darkgray',
+        #        (self.x * 100, self.y * 100),
+        #        (
+        #            self.x * 100 + const.WIDTH *
+        #            math.cos(self.angle + const.DELTA_ANGLE * i),
+        #            self.y * 100 + const.WIDTH *
+        #            math.sin(self.angle + const.DELTA_ANGLE * i)
+        #        ),
+        #        2,
+        #    )
+        #    pg.draw.line(
+        #        self.game.screen,
+        #        'darkgray',
+        #        (self.x * 100, self.y * 100),
+        #        (
+        #            self.x * 100 + const.WIDTH *
+        #            math.cos(self.angle - const.DELTA_ANGLE * i),
+        #            self.y * 100 + const.WIDTH *
+        #            math.sin(self.angle - const.DELTA_ANGLE * i)
+        #        ),
+        #        2,
+        #    )
         pg.draw.circle(
             self.game.screen,
             'green',
@@ -100,10 +100,10 @@ class Player:
     def update(self) -> None:
         self.movement()
 
-    @property
+    # @property
     def pos(self) -> tuple[float, float]:
         return (self.x, self.y)
 
-    @property
+    # @property
     def map_pos(self) -> tuple[int, int]:
         return (int(self.x), int(self.y))
