@@ -1,5 +1,5 @@
 import sys
-import multiprocessing as mp
+# import multiprocessing as mp
 # import classes
 from object_renderer import ObjectRenderer
 from raycasting import RayCasting
@@ -15,8 +15,10 @@ class Game:
         pg.init()
         self.screen: pg.surface.Surface = pg.display.set_mode(const.RESOLUTION)
         self.clock: pg.time.Clock = pg.time.Clock()
-        self.delta_time: int = 1
+        self.delta_time: int = 60
         self.object_renderer = ObjectRenderer(self.screen)
+        self.raycast: bool = True
+        self.displaying_map: bool = False
         self.new_game()
 
     def new_game(self) -> None:
@@ -26,15 +28,16 @@ class Game:
 
     def update(self) -> None:
         self.player.update()
-        self.raycasting.ray_cast(self.screen)
+        if self.raycast == True:
+            self.raycasting.ray_cast(self.screen)
         pg.display.flip()
         self.delta_time = self.clock.tick(const.FPS)
         pg.display.set_caption(f"{self.clock.get_fps() :.1f}")
 
     def draw(self) -> None:
         self.screen.fill('black')
-    #     self.map.draw()
-    #     self.player.draw()
+        self.map.draw()
+        self.player.draw()
 
     def check_events(self) -> None:
         for event in pg.event.get():

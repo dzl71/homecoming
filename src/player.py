@@ -1,3 +1,4 @@
+import time
 import math
 import pygame as pg
 import constants as const
@@ -34,6 +35,14 @@ class Player:
             dy += speed_cos
 
         self.check_wall_collision(dx, dy)
+
+        if keys[pg.K_m]:
+            if not self.game.displaying_map:
+                self.game.raycast = False
+            else:
+                self.game.raycast = True
+            self.game.displaying_map = not self.game.displaying_map
+            time.sleep(0.08)
 
         if keys[pg.K_LEFT]:
             self.angle -= const.PLAYER_ROTATION_SPEED * self.game.delta_time
