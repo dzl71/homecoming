@@ -11,9 +11,8 @@ class Player:
         self.y = const.STARTING_Y
 
     def movement(self) -> None:
-        rad_angle = math.radians(self.angle)
-        sin_a: float = math.sin(rad_angle)
-        cos_a: float = math.cos(rad_angle)
+        sin_a: float = math.sin(self.angle)
+        cos_a: float = math.cos(self.angle)
         speed = const.PLAYER_MOVEMENT_SPEED * self.game.delta_time
         dx: float = 0
         dy: float = 0
@@ -41,56 +40,56 @@ class Player:
         if keys[pg.K_RIGHT]:
             self.angle += const.PLAYER_ROTATION_SPEED * self.game.delta_time
 
-        self.angle %= 360
+        self.angle %= math.tau
 
     def check_wall(self, x: int, y: int) -> bool:
-        return (y, x) not in self.game.map.get_wall_positoins()
+        return (y, x) not in self.game.map.wall_positions
 
     def check_wall_collision(self, dx: float, dy: float) -> None:
-        if self.check_wall(int(self.x + dx), int(self.y)):
+        scale = const.PLAYER_SIZE_SCALE / self.game.delta_time
+        if self.check_wall(int(self.x + dx * scale), int(self.y)):
             self.x += dx
-        if self.check_wall(int(self.x), int(self.y + dy)):
+        if self.check_wall(int(self.x), int(self.y + dy * scale)):
             self.y += dy
 
     # test funtion
     def draw(self) -> None:
-        rad_angle = math.radians(self.angle)
         pg.draw.line(
             self.game.screen,
             'yellow',
             (self.x * 100, self.y * 100),
             (
-                self.x * 100 + const.WIDTH * math.cos(rad_angle),
-                self.y * 100 + const.WIDTH * math.sin(rad_angle)
+                self.x * 100 + const.WIDTH * math.cos(self.angle),
+                self.y * 100 + const.WIDTH * math.sin(self.angle)
             ),
             2,
         )
         # draw field of view
-        for i in range(1, const.RAY_NUM // 2 + 1):
-            pg.draw.line(
-                self.game.screen,
-                'darkgray',
-                (self.x * 100, self.y * 100),
-                (
-                    self.x * 100 + const.WIDTH *
-                    math.cos(math.radians(self.angle + const.DELTA_ANGLE * i)),
-                    self.y * 100 + const.WIDTH *
-                    math.sin(math.radians(self.angle + const.DELTA_ANGLE * i))
-                ),
-                2,
-            )
-            pg.draw.line(
-                self.game.screen,
-                'darkgray',
-                (self.x * 100, self.y * 100),
-                (
-                    self.x * 100 + const.WIDTH *
-                    math.cos(math.radians(self.angle - const.DELTA_ANGLE * i)),
-                    self.y * 100 + const.WIDTH *
-                    math.sin(math.radians(self.angle - const.DELTA_ANGLE * i)),
-                ),
-                2,
-            )
+        # for i in range(1, const.RAY_NUM // 2 + 1):
+        #     pg.draw.line(
+        #         self.game.screen,
+        #         'darkgray',
+        #         (self.x * 100, self.y * 100),
+        #         (
+        #             self.x * 100 + const.WIDTH *
+        #             math.cos(self.angle + const.DELTA_ANGLE * i),
+        #             self.y * 100 + const.WIDTH *
+        #             math.sin(self.angle + const.DELTA_ANGLE * i)
+        #         ),
+        #         2,
+        #     )
+        #     pg.draw.line(
+        #         self.game.screen,
+        #         'darkgray',
+        #         (self.x * 100, self.y * 100),
+        #         (
+        #             self.x * 100 + const.WIDTH *
+        #             math.cos(self.angle - const.DELTA_ANGLE * i),
+        #             self.y * 100 + const.WIDTH *
+        #             math.sin(self.angle - const.DELTA_ANGLE * i),
+        #         ),
+        #         2,
+        #     )
         pg.draw.circle(
             self.game.screen,
             'green',
