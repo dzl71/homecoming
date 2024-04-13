@@ -15,7 +15,7 @@ class Game:
         pg.init()
         self.screen: pg.surface.Surface = pg.display.set_mode(const.RESOLUTION)
         self.clock: pg.time.Clock = pg.time.Clock()
-        self.delta_time: int = 60
+        self.delta_time: int = 1
         self.object_renderer = ObjectRenderer(self.screen)
         self.raycast: bool = True
         self.displaying_map: bool = False

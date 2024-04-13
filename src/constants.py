@@ -7,7 +7,7 @@ HALF_HEIGHT: int = HEIGHT // 2
 RESOLUTION: tuple[int, int] = (WIDTH, HEIGHT)
 
 
-FPS: int = 0
+FPS: int = 60
 
 MAP = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
