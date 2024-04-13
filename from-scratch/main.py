@@ -1,7 +1,11 @@
 import sys
+import multiprocessing as mp
+# import classes
+from object_renderer import ObjectRenderer
 from raycasting import RayCasting
 from player import Player
 from map import Map
+# import modules
 import constants as const
 import pygame as pg
 
@@ -12,6 +16,7 @@ class Game:
         self.screen: pg.surface.Surface = pg.display.set_mode(const.RESOLUTION)
         self.clock: pg.time.Clock = pg.time.Clock()
         self.delta_time: int = 1
+        self.object_renderer = ObjectRenderer(self.screen)
         self.new_game()
 
     def new_game(self) -> None:
@@ -28,8 +33,8 @@ class Game:
 
     def draw(self) -> None:
         self.screen.fill('black')
-        # self.map.draw()
-        # self.player.draw()
+    #     self.map.draw()
+    #     self.player.draw()
 
     def check_events(self) -> None:
         for event in pg.event.get():
