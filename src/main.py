@@ -22,6 +22,8 @@ class Game:
         self.new_game()
 
     def new_game(self) -> None:
+        pg.mouse.set_pos(const.HALF_WIDTH, const.HALF_HEIGHT)
+        pg.mouse.set_visible(False)
         self.player: Player = Player(self)
         self.map: Map = Map(self)
         self.object_renderer = ObjectRenderer(self)

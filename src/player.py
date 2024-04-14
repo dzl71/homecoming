@@ -36,6 +36,15 @@ class Player:
 
         self.check_wall_collision(dx, dy)
 
+        x_movement, _ = pg.mouse.get_rel()
+        if not self.game.options.displaying_map:
+            self.angle += (
+                const.PLAYER_ROTATION_SPEED *
+                self.game.delta_time *
+                x_movement /
+                const.MOUSE_SENSETIVITY
+            )
+
         if keys[pg.K_LEFT] and not self.game.options.displaying_map:
             self.angle -= const.PLAYER_ROTATION_SPEED * self.game.delta_time
 
