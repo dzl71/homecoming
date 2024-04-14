@@ -121,15 +121,9 @@ class ObjectRenderer:
             # Find corresponding color
             color = self.floor_ceil_pixel_grid[texture_x][texture_y]
 
-            # Adjust color according to distance
-            intensity = calculate_color_intensity(actual_distance)
-            adjusted_color = tuple(
-                color_value * intensity for color_value in color
-            )
-
             # Fill in the pixel
             screen.fill(
-                adjusted_color,
+                color,
                 (
                     ray * const.SCALE,
                     const.HEIGHT - pixel_position,
@@ -138,7 +132,7 @@ class ObjectRenderer:
                 )
             )
             screen.fill(
-                adjusted_color,
+                color,
                 (
                     ray * const.SCALE,
                     pixel_position,
