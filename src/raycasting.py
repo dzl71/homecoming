@@ -3,31 +3,6 @@ import pygame as pg
 import constants as const
 from map import Map
 from player import Player
-from PIL import Image
-
-
-longest_distance = math.sqrt(
-    len(const.MAP)**2 + len(const.MAP[0])**2)
-
-
-def calculate_color_intensity(distance):
-    # Calculate intensity relative to distance
-    return (1 - (distance / longest_distance))**2
-
-
-def split_pixel_grid(image: Image.Image):
-    # Load pixel data from texture
-    texture_data = image.load()
-
-    # Iterate through each column and row and add pixel to list
-    return [
-        [
-            texture_data[column, row] for row in range(image.height)
-        ] for column in range(image.width)
-    ]
-
-
-floor_pixel_grid = split_pixel_grid(Image.open("resources/textures/1.png"))
 
 
 def pos_cos(angle: float) -> bool:
@@ -163,70 +138,6 @@ class RayCasting:
 
         return (depth, texture, intersect_x)
 
-    def draw_floor_ceiling(self, screen, ray, pixel_position, ray_angle):
-        delta_pixel_position = 3
-        cos_a: float = math.cos(ray_angle)
-        sin_a: float = math.sin(ray_angle)
-        # Continue to calculate pixels while on screen
-        while pixel_position < const.HEIGHT:
-            # Use pixel and camera position to find the straight distance from camera to floor intersection
-            pixel_distance_to_center = pixel_position - const.HALF_HEIGHT
-            straight_distance = const.SCREEN_DISTANCE * \
-                const.WALL_HEIGHT / 2 / pixel_distance_to_center
-            # Calculate actual distance
-            actual_distance = straight_distance / \
-                math.cos(ray_angle - self.player.angle)
-
-            if actual_distance > const.MAX_RAY_DEPTH:
-                pixel_position += delta_pixel_position
-                continue
-
-            # Calculate floor intersection
-            floor_intersection_x = self.player.x + \
-                (cos_a * actual_distance)
-            floor_intersection_y = self.player.y + \
-                (sin_a * actual_distance)
-
-            # Find the correct texture index
-            texture_x = math.floor(
-                (floor_intersection_x % 1) * len(floor_pixel_grid)
-            )
-            texture_y = math.floor(
-                (floor_intersection_y % 1) * len(floor_pixel_grid)
-            )
-
-            # Find corresponding color
-            color = floor_pixel_grid[texture_x][texture_y]
-
-            # Adjust color according to distance
-            intensity = calculate_color_intensity(actual_distance)
-            adjusted_color = tuple(
-                color_value * intensity for color_value in color
-            )
-
-            # Fill in the pixel
-            screen.fill(
-                adjusted_color,
-                (
-                    ray * const.SCALE,
-                    const.HEIGHT - pixel_position,
-                    const.SCALE,
-                    delta_pixel_position
-                )
-            )
-            screen.fill(
-                adjusted_color,
-                (
-                    ray * const.SCALE,
-                    pixel_position,
-                    const.SCALE,
-                    delta_pixel_position
-                )
-            )
-
-            # Increment to calculate next pixel underneath
-            pixel_position += delta_pixel_position
-
     def ray_cast(self, screen) -> None:
         ray_angle: float = self.player.angle - const.HALF_FOV + 1e-6
         for ray in range(const.RAY_NUM):
@@ -267,7 +178,7 @@ class RayCasting:
             # projection height
             proj_height = const.SCREEN_DISTANCE / (ray_depth + 1e-6)
 
-            self.draw_floor_ceiling(
+            self.object_renderer.render_floor_ceil_column(
                 screen,
                 ray,
                 const.HALF_HEIGHT + proj_height // 2 - 1,
