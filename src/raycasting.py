@@ -66,7 +66,7 @@ class RayCasting:
         # sending the ray deeper until collision accures, or exiting the bounds
         texture: int = 1  # default texture
         for _ in range(const.MAX_RAY_DEPTH):
-            tile: tuple[int, int] = (int(intersect_y), int(intersect_x))
+            tile: tuple[int, int] = (int(intersect_x), int(intersect_y))
             if tile in self.map.wall_positions:
                 texture = self.map.wall_positions[tile]
                 break
@@ -124,7 +124,7 @@ class RayCasting:
         # sending the ray deeper until collision accures, or exiting the bounds
         texture: int = 1  # default texture
         for _ in range(const.MAX_RAY_DEPTH):
-            tile: tuple[int, int] = (int(intersect_y), int(intersect_x))
+            tile: tuple[int, int] = (int(intersect_x), int(intersect_y))
             if tile in self.map.wall_positions:
                 texture = self.map.wall_positions[tile]
                 break
