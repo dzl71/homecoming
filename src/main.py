@@ -32,7 +32,7 @@ class Game:
             (255, 255, 255)
         )
         time_left = my_font.render(
-            f'Hostages rescued: {self.time_left // 60}:{self.time_left % 60:0>2}',
+            f'Time left: {self.time_left // 60}:{self.time_left % 60:0>2}',
             False,
             (255, 255, 255)
         )
