@@ -72,7 +72,7 @@ class Game:
                 self.draw_map()
             self.display_data()
             pg.display.flip()
-            if time.time() - timer >= 1:
+            if time.time() - timer >= 1 and self.raycast:
                 self.time_left -= 1
                 timer = time.time()
             if self.time_left <= 0:
