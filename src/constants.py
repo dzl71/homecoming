@@ -2,7 +2,7 @@ import math
 
 WIDTH: int = 1600
 HALF_WIDTH: int = WIDTH // 2
-HEIGHT: int =  900
+HEIGHT: int = 900
 HALF_HEIGHT: int = HEIGHT // 2
 RESOLUTION: tuple[int, int] = (WIDTH, HEIGHT)
 
@@ -107,3 +107,5 @@ SCALE = WIDTH // RAY_NUM
 
 TEXTURE_SIZE: int = 255
 HALF_TEXTURE_SIZE: int = TEXTURE_SIZE // 2
+
+LONGEST_DISTANCE = math.sqrt(len(MAP)**2 + len(MAP[0])**2)
