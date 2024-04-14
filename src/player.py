@@ -21,20 +21,28 @@ class Player:
         speed_cos = speed * cos_a
 
         keys = pg.key.get_pressed()
-        if keys[pg.K_w]:
+        if keys[pg.K_w] and not self.game.displaying_map:
             dx += speed_cos
             dy += speed_sin
-        if keys[pg.K_s]:
+        if keys[pg.K_s] and not self.game.displaying_map:
             dx -= speed_cos
             dy -= speed_sin
-        if keys[pg.K_a]:
+        if keys[pg.K_a] and not self.game.displaying_map:
             dx += speed_sin
             dy -= speed_cos
-        if keys[pg.K_d]:
+        if keys[pg.K_d] and not self.game.displaying_map:
             dx -= speed_sin
             dy += speed_cos
 
         self.check_wall_collision(dx, dy)
+
+        if keys[pg.K_LEFT] and not self.game.displaying_map:
+            self.angle -= const.PLAYER_ROTATION_SPEED * self.game.delta_time
+
+        if keys[pg.K_RIGHT] and not self.game.displaying_map:
+            self.angle += const.PLAYER_ROTATION_SPEED * self.game.delta_time
+
+        self.angle %= math.tau
 
         if keys[pg.K_m]:
             if not self.game.displaying_map:
@@ -43,13 +51,6 @@ class Player:
                 self.game.raycast = True
             self.game.displaying_map = not self.game.displaying_map
             time.sleep(0.08)
-
-        if keys[pg.K_LEFT]:
-            self.angle -= const.PLAYER_ROTATION_SPEED * self.game.delta_time
-        if keys[pg.K_RIGHT]:
-            self.angle += const.PLAYER_ROTATION_SPEED * self.game.delta_time
-
-        self.angle %= math.tau
 
     def check_wall(self, x: int, y: int) -> bool:
         return (y, x) not in self.game.map.wall_positions
@@ -103,7 +104,7 @@ class Player:
             self.game.screen,
             'green',
             (self.x * 100, self.y * 100),
-            15,
+            3,
         )
 
     def update(self) -> None:
