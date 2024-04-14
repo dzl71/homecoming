@@ -1,5 +1,4 @@
 import math
-import pygame as pg
 import constants as const
 from map import Map
 from player import Player
