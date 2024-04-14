@@ -25,7 +25,7 @@ class ObjectRenderer:
     def __init__(self, game) -> None:
         self.player = game.player
         self.screen = game.screen
-        self.floor_pixel_grid = split_pixel_grid(
+        self.floor_ceil_pixel_grid = split_pixel_grid(
             Image.open("resources/textures/1.png")
         )
         self.wall_textures: dict[int, pg.Surface] = {
@@ -112,14 +112,14 @@ class ObjectRenderer:
 
             # Find the correct texture index
             texture_x = math.floor(
-                (floor_intersection_x % 1) * len(self.floor_pixel_grid)
+                (floor_intersection_x % 1) * len(self.floor_ceil_pixel_grid)
             )
             texture_y = math.floor(
-                (floor_intersection_y % 1) * len(self.floor_pixel_grid)
+                (floor_intersection_y % 1) * len(self.floor_ceil_pixel_grid)
             )
 
             # Find corresponding color
-            color = self.floor_pixel_grid[texture_x][texture_y]
+            color = self.floor_ceil_pixel_grid[texture_x][texture_y]
 
             # Adjust color according to distance
             intensity = calculate_color_intensity(actual_distance)
