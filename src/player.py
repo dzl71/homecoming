@@ -67,7 +67,7 @@ class Player:
             sys.exit()
 
     def check_wall(self, x: int, y: int) -> bool:
-        return (x, y) not in self.game.map.wall_positions
+        return (x, y) not in self.game.map.walls
 
     def check_wall_collision(self, dx: float, dy: float) -> None:
         scale = const.PLAYER_SIZE_SCALE / self.game.delta_time
