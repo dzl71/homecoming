@@ -30,7 +30,7 @@ class ObjectRenderer:
         )
         self.default_texture: int = 1
         self.wall_textures: dict[int, pg.Surface] = {
-            1: self.get_texture("resources/textures/1.png")
+            1: self.get_texture("resources/textures/1.png"),
         }
 
     @staticmethod
@@ -40,7 +40,7 @@ class ObjectRenderer:
             (const.TEXTURE_SIZE, const.TEXTURE_SIZE)
         )
 
-    def render_wall_column(
+    def render_wall_sprite(
             self,
             texture: int,
             offset: float,

@@ -1,5 +1,6 @@
 import math
 import constants as const
+from sprite_renderer import SpriteRenderer
 from map import Map
 from player import Player
 
@@ -16,7 +17,7 @@ def pos_sin(angle: float) -> bool:
 
 class RayCasting:
     def __init__(self, game) -> None:
-        # self.game = game
+        self.game = game
         self.map: Map = game.map  # placeholder value
         self.player: Player = game.player
         self.object_renderer = game.object_renderer
@@ -165,7 +166,7 @@ class RayCasting:
                 ray_angle += const.DELTA_ANGLE
                 continue
 
-            self.object_renderer.render_wall_column(
+            self.object_renderer.render_wall_sprite(
                 texture,
                 offset,
                 proj_height,
@@ -173,3 +174,4 @@ class RayCasting:
             )
 
             ray_angle += const.DELTA_ANGLE
+        self.object_renderer.render_wall_sprite(SpriteRenderer(self.game, "resources/sprites/tst.jpg", (3, 3)).get_sprite_projection())
