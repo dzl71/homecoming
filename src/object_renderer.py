@@ -29,30 +29,38 @@ class ObjectRenderer:
             Image.open("resources/textures/1.png")
         )
         self.default_texture: int = 1
-        self.wall_textures: dict[int, pg.Surface] = {
-            1: self.get_texture("resources/textures/1.png"),
+        self.textures: dict[int, pg.Surface] = {
+            1: self.get_texture(
+                "resources/textures/1.png",
+                (const.TEXTURE_SIZE, const.TEXTURE_SIZE)
+            ),
+            -1: self.get_texture(
+                "resources/sprites/mario.png",
+                (const.TEXTURE_SIZE, const.TEXTURE_SIZE)
+            ),
         }
 
     @staticmethod
-    def get_texture(path: str) -> pg.Surface:
+    def get_texture(path: str, dimentions) -> pg.Surface:
         return pg.transform.scale(
             pg.image.load(path).convert_alpha(),
-            (const.TEXTURE_SIZE, const.TEXTURE_SIZE)
+            dimentions
         )
 
-    def render_wall_sprite(
+    def render_texture_column(
             self,
             texture: int,
             offset: float,
             proj_height: float,
-            ray: int
+            ray: int,
+            dimentions: tuple[int, int]
     ) -> None:
         if proj_height < const.HEIGHT:
-            wall_column = self.wall_textures[texture].subsurface(
-                offset * (const.TEXTURE_SIZE - const.SCALE),
+            wall_column = self.textures[texture].subsurface(
+                offset * (dimentions[0] - const.SCALE),
                 0,
                 const.SCALE,
-                const.TEXTURE_SIZE
+                dimentions[1]
             )
             wall_column = pg.transform.scale(
                 wall_column,
@@ -63,10 +71,10 @@ class ObjectRenderer:
                 const.HALF_HEIGHT - proj_height // 2
             )
         else:
-            texture_height: float = const.TEXTURE_SIZE * const.HEIGHT / proj_height
-            wall_column = self.wall_textures[texture].subsurface(
-                offset * (const.TEXTURE_SIZE - const.SCALE),
-                const.HALF_TEXTURE_SIZE - texture_height // 2,
+            texture_height: float = dimentions[1] * const.HEIGHT / proj_height
+            wall_column = self.textures[texture].subsurface(
+                offset * (dimentions[0] - const.SCALE),
+                dimentions[1] // 2 - texture_height // 2,
                 const.SCALE,
                 texture_height
             )
@@ -82,7 +90,6 @@ class ObjectRenderer:
 
     def render_floor_ceil_column(
             self,
-            screen,
             ray,
             max_pixel_position,
             ray_angle
@@ -123,7 +130,7 @@ class ObjectRenderer:
             color = self.floor_ceil_pixel_grid[texture_x][texture_y]
 
             # Fill in the pixel
-            screen.fill(
+            self.screen.fill(
                 color,
                 (
                     ray * const.SCALE,
@@ -132,7 +139,7 @@ class ObjectRenderer:
                     delta_pixel_position
                 )
             )
-            screen.fill(
+            self.screen.fill(
                 color,
                 (
                     ray * const.SCALE,
