@@ -34,7 +34,7 @@ class Game:
         self.player.movement()
         pg.mouse.set_pos(const.HALF_WIDTH, const.HALF_HEIGHT)
         if not self.options.displaying_map:
-            self.raycasting.ray_cast(self.screen)
+            self.raycasting.raycast()
         self.delta_time = self.clock.tick(const.FPS)
         pg.display.set_caption(f"{self.clock.get_fps() :.1f}")
 
