@@ -40,7 +40,7 @@ class Game:
 
     def check_events(self) -> None:
         for event in pg.event.get():
-            if event.type in (pg.QUIT, pg.K_ESCAPE):
+            if event.type == pg.QUIT:
                 pg.quit()
                 sys.exit()
 

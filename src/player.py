@@ -1,3 +1,4 @@
+import sys
 import time
 import math
 import pygame as pg
@@ -60,6 +61,10 @@ class Player:
             else:
                 self.game.options.displaying_map = False
             time.sleep(0.08)
+
+        if keys[pg.K_ESCAPE]:
+            pg.quit()
+            sys.exit()
 
     def check_wall(self, x: int, y: int) -> bool:
         return (x, y) not in self.game.map.wall_positions
