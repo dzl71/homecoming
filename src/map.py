@@ -6,9 +6,19 @@ class Map:
     def __init__(self, game) -> None:
         self.screen = game.screen
         self.player = game.player
-        self.map = const.MAP
+        self.map = self.format_map(const.MAP)
         self.wall_positions = self.get_wall_positoins()
         self.marked_positions = self.get_marked_positions()
+
+    def format_map(self, map_) -> list[str]:
+        formatted_map: list[list[int]] = []
+        for row in map_:
+            formatted_row: list[int] = []
+            for idx, symbol in enumerate(row):
+                if idx % 2 == 0:
+                    formatted_row.append(const.MAP_SYMBOL_MEANING[symbol])
+            formatted_map.append(formatted_row)
+        return formatted_map
 
     def get_wall_positoins(self) -> dict[tuple[int, int], int]:
         wall_positoins: dict[tuple[int, int], int] = {}
@@ -28,8 +38,8 @@ class Map:
 
     def draw_static(self, positions, color) -> tuple[int, int]:
         origin_pos: tuple[int, int] = None
-        left_bound = int(self.player.x) - const.MINIMAP_HALF_WIDTH
-        right_bound = int(self.player.x) + const.MINIMAP_HALF_WIDTH
+        left_bound = int(self.player.x) - const.MAP_HALF_WIDTH
+        right_bound = int(self.player.x) + const.MAP_HALF_WIDTH
         while left_bound < 0:
             left_bound += 1
             right_bound += 1
