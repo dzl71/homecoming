@@ -7,8 +7,9 @@ class Map:
         self.screen = game.screen
         self.player = game.player
         self.map = self.format_map(const.MAP)
-        self.wall_positions = self.get_wall_positoins()
-        self.marked_positions = self.get_marked_positions()
+        self.walls = self.get_wall_positions()
+        self.marked = self.get_marked_positions()
+        self.hostages = self.get_hostage_positions()
 
     def format_map(self, map_) -> list[str]:
         formatted_map: list[list[int]] = []
@@ -20,7 +21,7 @@ class Map:
             formatted_map.append(formatted_row)
         return formatted_map
 
-    def get_wall_positoins(self) -> dict[tuple[int, int], int]:
+    def get_wall_positions(self) -> dict[tuple[int, int], int]:
         wall_positoins: dict[tuple[int, int], int] = {}
         for row_idx, row in enumerate(self.map):
             for tile_idx, tile in enumerate(row):
@@ -28,11 +29,19 @@ class Map:
                     wall_positoins[(tile_idx, row_idx)] = tile
         return wall_positoins
 
+    def get_hostage_positions(self) -> dict[tuple[int, int], int]:
+        hostage_positoins: dict[tuple[int, int], int] = {}
+        for row_idx, row in enumerate(self.map):
+            for tile_idx, tile in enumerate(row):
+                if tile == -1:
+                    hostage_positoins[(tile_idx, row_idx)] = tile
+        return hostage_positoins
+
     def get_marked_positions(self) -> set[tuple[int, int]]:
         marked_positoins: set[tuple[int, int]] = set()
         for row_idx, row in enumerate(self.map):
             for tile_idx, tile in enumerate(row):
-                if tile == -1:
+                if tile == -2:
                     marked_positoins.add((tile_idx, row_idx))
         return marked_positoins
 
@@ -76,8 +85,8 @@ class Map:
         )
 
     def draw_map(self) -> None:
-        origin_pos = self.draw_static(self.wall_positions, 'darkgray')
-        self.draw_static(self.marked_positions, 'red')
+        origin_pos = self.draw_static(self.walls, 'darkgray')
+        self.draw_static(self.marked, 'red')
         self.draw_player(
             (self.player.x - origin_pos[0]) * const.MAP_SCALER,
             (self.player.y - origin_pos[1]) * const.MAP_SCALER
