@@ -39,10 +39,10 @@ class Player:
         x_movement, _ = pg.mouse.get_rel()
         if not self.game.options.displaying_map:
             self.angle += (
-                const.PLAYER_ROTATION_SPEED *
-                self.game.delta_time *
-                x_movement /
-                const.MOUSE_SENSETIVITY
+                const.PLAYER_ROTATION_SPEED
+                # * self.game.delta_time
+                * x_movement
+                / const.MOUSE_SENSETIVITY
             )
 
         if keys[pg.K_LEFT] and not self.game.options.displaying_map:
@@ -70,6 +70,3 @@ class Player:
             self.x += dx
         if self.check_wall(int(self.x), int(self.y + dy * scale)):
             self.y += dy
-
-    def update(self) -> None:
-        self.movement()

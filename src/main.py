@@ -31,7 +31,8 @@ class Game:
         self.options: Options = Options(self.screen)
 
     def update(self) -> None:
-        self.player.update()
+        self.player.movement()
+        pg.mouse.set_pos(const.HALF_WIDTH, const.HALF_HEIGHT)
         if not self.options.displaying_map:
             self.raycasting.ray_cast(self.screen)
         self.delta_time = self.clock.tick(const.FPS)

@@ -71,7 +71,7 @@ STARTING_X = 1
 STARTING_Y = 2
 PLAYER_SIZE_SCALE = 30
 
-MAX_RAY_DEPTH = 16  # recommended to be the smallest dimention of the map
+MAX_RAY_DEPTH = 16
 FOV = math.pi / 3  # in radians
 HALF_FOV = FOV / 2
 RAY_NUM = WIDTH // 5
@@ -97,3 +97,5 @@ FONT_SIZE = 30
 MINIMAP_HALF_WIDTH: int = math.ceil(HALF_WIDTH / 100)
 MINIMAP_HALF_HEIGHT: int = math.ceil(HALF_HEIGHT / 100)
 MAP_SCALER: int = 100
+
+MOUSE_SENSETIVITY: float = 1  # lower == faster
