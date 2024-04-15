@@ -28,6 +28,7 @@ class ObjectRenderer:
         self.floor_ceil_pixel_grid = split_pixel_grid(
             Image.open("resources/textures/1.png")
         )
+        self.default_texture: int = 1
         self.wall_textures: dict[int, pg.Surface] = {
             1: self.get_texture("resources/textures/1.png")
         }

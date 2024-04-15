@@ -58,13 +58,8 @@ class RayCasting:
         delta_y: float = delta_depth * sin_a
         intersect_y: float = self.player.y + depth * sin_a
 
-        # if ray_angle == self.player.angle - const.HALF_FOV + 1e-6:
-        # print(
-        #     f"initial_vert_{intersect_x = }, initial_vert_{intersect_y = }"
-        # )
-
         # sending the ray deeper until collision accures, or exiting the bounds
-        texture: int = 1  # default texture
+        texture: int = self.object_renderer.default_texture
         for _ in range(const.MAX_RAY_DEPTH):
             tile: tuple[int, int] = (int(intersect_x), int(intersect_y))
             if tile in self.map.wall_positions:
@@ -73,9 +68,6 @@ class RayCasting:
             intersect_x += delta_x
             intersect_y += delta_y
             depth += delta_depth
-
-        # if ray_angle == self.player.angle - const.HALF_FOV + 1e-6:
-        #     print(f"vert_{intersect_x = }, vert_{intersect_y = }\n")
 
         return (depth, texture, intersect_y)
 
@@ -116,13 +108,8 @@ class RayCasting:
         delta_x: float = delta_depth * cos_a
         intersect_x: float = self.player.x + depth * cos_a
 
-        # if ray_angle == self.player.angle - const.HALF_FOV + 1e-6:
-        #     print(
-        #         f"initial_hor_{intersect_x = }, initial_hor_{intersect_y = }"
-        #     )
-
         # sending the ray deeper until collision accures, or exiting the bounds
-        texture: int = 1  # default texture
+        texture: int = self.object_renderer.default_texture
         for _ in range(const.MAX_RAY_DEPTH):
             tile: tuple[int, int] = (int(intersect_x), int(intersect_y))
             if tile in self.map.wall_positions:
@@ -131,9 +118,6 @@ class RayCasting:
             intersect_x += delta_x
             intersect_y += delta_y
             depth += delta_depth
-
-        # if ray_angle == self.player.angle - const.HALF_FOV + 1e-6:
-        #     print(f"hor_{intersect_x = }, hor_{intersect_y = }\n")
 
         return (depth, texture, intersect_x)
 
@@ -164,13 +148,6 @@ class RayCasting:
                 hor_x %= 1
                 offset = hor_x if not pos_sin(ray_angle) else 1 - hor_x
 
-            # if ray_angle == self.player.angle - const.HALF_FOV + 1e-6:
-            #     print(f"{ray_angle = }")
-            #     print(f"{self.vert_wall_distance(ray_angle) = }")
-            #     print(f"{self.hor_wall_distance(ray_angle) = }")
-            #     print(f"{ray_depth = }")
-            #     print("\n====================================================\n")
-
             # remove the fishblow effect
             ray_depth *= math.cos(self.player.angle - ray_angle)
 
@@ -194,14 +171,5 @@ class RayCasting:
                 proj_height,
                 ray
             )
-
-            # pg.draw.line(
-            #     screen,
-            #     'darkgray',
-            #     (self.player.x * 100, self.player.y * 100),
-            #     (self.player.x * 100 + ray_depth * 100 * math.cos(ray_angle),
-            #         self.player.y * 100 + ray_depth * 100 * math.sin(ray_angle)),
-            #     2,
-            # )
 
             ray_angle += const.DELTA_ANGLE

@@ -1,4 +1,3 @@
-import math
 import constants as const
 import pygame as pg
 
