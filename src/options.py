@@ -8,7 +8,7 @@ class Options:
         self.displaying_map: bool = False
         self.time_left: int = const.GAME_TIME
         self.rescued_hostages: int = 0
-        self.map_usages: int = 3
+        self.map_usages: int = 300
 
     def display_data(self) -> None:
         font = pg.font.SysFont(const.FONT, const.FONT_SIZE)

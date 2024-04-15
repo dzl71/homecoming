@@ -43,8 +43,8 @@ class Map:
         while left_bound < 0:
             left_bound += 1
             right_bound += 1
-        upper_bound = int(self.player.y) - const.MINIMAP_HALF_HEIGHT
-        lower_bound = int(self.player.y) + const.MINIMAP_HALF_HEIGHT
+        upper_bound = int(self.player.y) - const.MAP_HALF_HEIGHT
+        lower_bound = int(self.player.y) + const.MAP_HALF_HEIGHT
         while upper_bound < 0:
             upper_bound += 1
             lower_bound += 1

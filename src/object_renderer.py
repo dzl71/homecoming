@@ -30,7 +30,10 @@ class ObjectRenderer:
         )
         self.default_texture: int = 1
         self.wall_textures: dict[int, pg.Surface] = {
-            1: self.get_texture("resources/textures/1.png")
+            1: self.get_texture("resources/textures/1.png"),
+            2: self.get_texture("resources/textures/right_wall.png"),
+            3: self.get_texture("resources/textures/left_wall.png"),
+
         }
 
     @staticmethod
