@@ -42,8 +42,6 @@ class Game:
         pg.display.set_caption(f"{self.clock.get_fps() :.1f}")
         self.next_tile = self.pathfinding.get_path(self.next_tile, (7, 8))
         self.map.marked.add(self.next_tile)
-        print(f"{self.next_tile = }")
-        print(f"{self.map.map = }")
 
     def check_events(self) -> None:
         for event in pg.event.get():
