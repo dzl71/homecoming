@@ -147,17 +147,17 @@ class RayCasting:
         # remove the fishblow effect
         depth *= math.cos(self.player.angle - ray_angle)
 
-        return (depth, offset, texture)
+        return (depth, texture, offset)
 
     def raycast(self) -> None:
         ray_angle: float = self.player.angle - const.HALF_FOV + 1e-6
         for ray in range(const.RAY_NUM):
 
-            (wall_depth, wall_offset, wall_texture) = self.get_closest(
+            (wall_depth, wall_texture, wall_offset) = self.get_closest(
                 ray_angle, self.map.walls, 1
             )
 
-            (hostage_depth, hostage_offset, hostage_texture) = self.get_closest(
+            (hostage_depth, hostage_texture, hostage_offset) = self.get_closest(
                 ray_angle, self.map.hostages, -1
             )
 
@@ -183,7 +183,7 @@ class RayCasting:
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
             )
 
-            if hostage_depth < wall_depth:
+            if hostage_depth <= wall_depth:
                 self.object_renderer.render_texture_column(
                     hostage_texture,
                     hostage_offset,
