@@ -2,6 +2,7 @@ import sys
 import time
 # import multiprocessing as mp
 # import classes
+from pathfinding import PathFinding
 from object_renderer import ObjectRenderer
 from options import Options
 from raycasting import RayCasting
@@ -29,6 +30,8 @@ class Game:
         self.object_renderer = ObjectRenderer(self)
         self.raycasting: RayCasting = RayCasting(self)
         self.options: Options = Options(self.screen)
+        self.pathfinding: PathFinding = PathFinding(self)
+        self.next_tile = self.pathfinding.get_path((2, 1), (7, 8))
 
     def update(self) -> None:
         self.player.movement()
@@ -37,6 +40,10 @@ class Game:
             self.raycasting.raycast()
         self.delta_time = self.clock.tick(const.FPS)
         pg.display.set_caption(f"{self.clock.get_fps() :.1f}")
+        self.next_tile = self.pathfinding.get_path(self.next_tile, (7, 8))
+        self.map.marked.add(self.next_tile)
+        print(f"{self.next_tile = }")
+        print(f"{self.map.map = }")
 
     def check_events(self) -> None:
         for event in pg.event.get():
