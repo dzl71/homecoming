@@ -16,20 +16,21 @@ def pos_sin(angle: float) -> bool:
 
 class RayCasting:
     def __init__(self, game) -> None:
-        # self.game = game
+        self.game = game
+        self.screen = game.screen
         self.map: Map = game.map  # placeholder value
         self.player: Player = game.player
         self.object_renderer = game.object_renderer
 
-    def vert_wall_distance(self, ray_angle: float) -> tuple[float, int, float]:
+    def vert_intersect_for(self, ray_angle: float, object_positions, default_texture) -> tuple[float, int, float]:
         '''
         @ray_angle
             the angle of the sended ray (in radians)
 
         @return
              tuple(
-                 the distance to the vertical intersection with a wall,
-                 the enumeration of the wall texture,
+                 the depth to the vertical intersection,
+                 the enumeration of the texture,
                  y value of the intersection
              )
 
@@ -59,11 +60,11 @@ class RayCasting:
         intersect_y: float = self.player.y + depth * sin_a
 
         # sending the ray deeper until collision accures, or exiting the bounds
-        texture: int = self.object_renderer.default_texture
+        texture: int = default_texture
         for _ in range(const.MAX_RAY_DEPTH):
             tile: tuple[int, int] = (int(intersect_x), int(intersect_y))
-            if tile in self.map.wall_positions:
-                texture = self.map.wall_positions[tile]
+            if tile in object_positions:
+                texture = object_positions[tile]
                 break
             intersect_x += delta_x
             intersect_y += delta_y
@@ -71,16 +72,16 @@ class RayCasting:
 
         return (depth, texture, intersect_y)
 
-    def hor_wall_distance(self, ray_angle: float) -> tuple[float, int, float]:
+    def hor_intersect_for(self, ray_angle: float, object_positions, default_texture) -> tuple[float, int, float]:
         '''
         @ray_angle
             the angle of the sended ray (in radians)
 
         @return
              tuple(
-                the distance to the horizontal intersection with a wall,
-                the enumeration of the wall texture,
-                x value of the intersection
+                 the depth to the horizontal intersection,
+                 the enumeration of the texture,
+                 x value of the intersection
              )
 
         '''
@@ -91,8 +92,8 @@ class RayCasting:
         cos_a: float = math.cos(ray_angle)
 
         # calculating the y of first intersection and the delta_y of the following intersections
-        delta_y: float
         intersect_y: int
+        delta_y: float
         if pos_sin(ray_angle):
             delta_y = 1
             intersect_y = math.ceil(self.player.y)
@@ -109,11 +110,11 @@ class RayCasting:
         intersect_x: float = self.player.x + depth * cos_a
 
         # sending the ray deeper until collision accures, or exiting the bounds
-        texture: int = self.object_renderer.default_texture
+        texture: int = default_texture
         for _ in range(const.MAX_RAY_DEPTH):
             tile: tuple[int, int] = (int(intersect_x), int(intersect_y))
-            if tile in self.map.wall_positions:
-                texture = self.map.wall_positions[tile]
+            if tile in object_positions:
+                texture = object_positions[tile]
                 break
             intersect_x += delta_x
             intersect_y += delta_y
@@ -121,55 +122,74 @@ class RayCasting:
 
         return (depth, texture, intersect_x)
 
-    def ray_cast(self, screen) -> None:
+    def get_closest(self, ray_angle, objet_positions, default_texture) -> None:
+        sin_a: float = math.sin(ray_angle)
+        cos_a: float = math.cos(ray_angle)
+
+        vert = self.vert_intersect_for(
+            ray_angle, objet_positions, default_texture
+        )
+        hor = self.hor_intersect_for(
+            ray_angle, objet_positions, default_texture
+        )
+
+        res = min(vert, hor, key=lambda t: t[0])
+
+        depth = res[0]
+        texture = res[1]
+        temp_offet = res[2] % 1
+
+        if res == vert:
+            offset = temp_offet if cos_a > 0 else (1 - temp_offet)
+        else:
+            offset = (1 - temp_offet) if sin_a > 0 else temp_offet
+
+        # remove the fishblow effect
+        depth *= math.cos(self.player.angle - ray_angle)
+
+        return (depth, texture, offset)
+
+    def raycast(self) -> None:
         ray_angle: float = self.player.angle - const.HALF_FOV + 1e-6
         for ray in range(const.RAY_NUM):
 
-            vert_depth: float
-            vert_texture: int
-            vert_y: float
-            (vert_depth, vert_texture, vert_y) = self.vert_wall_distance(ray_angle)
-            hor_depth: float
-            hor_texture: int
-            hor_x: float
-            (hor_depth, hor_texture, hor_x) = self.hor_wall_distance(ray_angle)
+            (wall_depth, wall_texture, wall_offset) = self.get_closest(
+                ray_angle, self.map.walls, 1
+            )
 
-            ray_depth: float
-            offset: float
-            texture: int
-            if vert_depth < hor_depth:
-                texture = vert_texture
-                ray_depth = vert_depth
-                vert_y %= 1
-                offset = vert_y if pos_cos(ray_angle) else 1 - vert_y
-            else:
-                texture = hor_texture
-                ray_depth = hor_depth
-                hor_x %= 1
-                offset = hor_x if not pos_sin(ray_angle) else 1 - hor_x
-
-            # remove the fishblow effect
-            ray_depth *= math.cos(self.player.angle - ray_angle)
+            (hostage_depth, hostage_texture, hostage_offset) = self.get_closest(
+                ray_angle, self.map.hostages, -1
+            )
 
             # projection height
-            proj_height = const.SCREEN_DISTANCE / (ray_depth + 1e-6)
+            wall_proj_height = const.SCREEN_DISTANCE / (wall_depth + 1e-6)
+            hostage_proj_height = const.SCREEN_DISTANCE / (hostage_depth + 1e-6)
 
             self.object_renderer.render_floor_ceil_column(
-                screen,
                 ray,
-                const.HALF_HEIGHT + proj_height // 2 - 1,
+                const.HALF_HEIGHT + wall_proj_height // 2 - 1,
                 ray_angle
             )
 
-            if ray_depth >= const.MAX_RAY_DEPTH:
+            if wall_depth >= const.MAX_RAY_DEPTH:
                 ray_angle += const.DELTA_ANGLE
                 continue
 
-            self.object_renderer.render_wall_column(
-                texture,
-                offset,
-                proj_height,
-                ray
+            self.object_renderer.render_texture_column(
+                wall_texture,
+                wall_offset,
+                wall_proj_height,
+                ray,
+                (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
             )
+
+            if hostage_depth <= wall_depth:
+                self.object_renderer.render_texture_column(
+                    hostage_texture,
+                    hostage_offset,
+                    hostage_proj_height,
+                    ray,
+                    (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
+                )
 
             ray_angle += const.DELTA_ANGLE

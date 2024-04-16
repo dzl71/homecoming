@@ -66,8 +66,10 @@ class Player:
             pg.quit()
             sys.exit()
 
+        self.remove_colided_sprites()
+
     def check_wall(self, x: int, y: int) -> bool:
-        return (x, y) not in self.game.map.wall_positions
+        return (x, y) not in self.game.map.walls
 
     def check_wall_collision(self, dx: float, dy: float) -> None:
         scale = const.PLAYER_SIZE_SCALE / self.game.delta_time
@@ -75,3 +77,9 @@ class Player:
             self.x += dx
         if self.check_wall(int(self.x), int(self.y + dy * scale)):
             self.y += dy
+
+    def remove_colided_sprites(self) -> None:
+        pos = (int(self.x), int(self.y))
+        if pos in self.game.map.hostages:
+            self.game.map.hostages.pop(pos)
+            self.game.options.rescued_hostages -= 1
