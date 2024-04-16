@@ -66,6 +66,8 @@ class Player:
             pg.quit()
             sys.exit()
 
+        self.remove_colided_sprites()
+
     def check_wall(self, x: int, y: int) -> bool:
         return (x, y) not in self.game.map.walls
 
@@ -75,3 +77,9 @@ class Player:
             self.x += dx
         if self.check_wall(int(self.x), int(self.y + dy * scale)):
             self.y += dy
+
+    def remove_colided_sprites(self) -> None:
+        pos = (int(self.x), int(self.y))
+        if pos in self.game.map.hostages:
+            self.game.map.hostages.pop(pos)
+            self.game.options.rescued_hostages -= 1
