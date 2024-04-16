@@ -9,7 +9,9 @@ class Map:
         self.map = self.format_map(const.MAP)
         self.walls = self.get_wall_positions()
         self.marked = self.get_marked_positions()
+        self.floor = self.get_floor_positions()
         self.hostages = self.get_hostage_positions()
+        print(f"{self.marked = }")
 
     def format_map(self, map_) -> list[str]:
         formatted_map: list[list[int]] = []
@@ -20,6 +22,13 @@ class Map:
                     formatted_row.append(const.MAP_SYMBOL_MEANING[symbol])
             formatted_map.append(formatted_row)
         return formatted_map
+    def get_floor_positions(self) -> dict[tuple[int, int], int]:
+        floor_positoins: dict[tuple[int, int], int] = {}
+        for row_idx, row in enumerate(self.map):
+            for tile_idx, tile in enumerate(row):
+                if tile == 0:
+                    floor_positoins[(tile_idx, row_idx)] = tile
+        return floor_positoins
 
     def get_wall_positions(self) -> dict[tuple[int, int], int]:
         wall_positoins: dict[tuple[int, int], int] = {}
@@ -45,8 +54,7 @@ class Map:
                     marked_positoins.add((tile_idx, row_idx))
         return marked_positoins
 
-    def draw_static(self, positions, color) -> tuple[int, int]:
-        origin_pos: tuple[int, int] = None
+    def draw_static(self, positions, color, origin_pos) -> tuple[int, int]:
         left_bound = int(self.player.x) - const.MAP_HALF_WIDTH
         right_bound = int(self.player.x) + const.MAP_HALF_WIDTH
         while left_bound < 0:
@@ -85,8 +93,8 @@ class Map:
         )
 
     def draw_map(self) -> None:
-        origin_pos = self.draw_static(self.walls, 'darkgray')
-        self.draw_static(self.marked, 'red')
+        origin_pos = self.draw_static(self.walls, 'darkgray', None)
+        self.draw_static(self.marked, 'red', origin_pos)
         self.draw_player(
             (self.player.x - origin_pos[0]) * const.MAP_SCALER,
             (self.player.y - origin_pos[1]) * const.MAP_SCALER
