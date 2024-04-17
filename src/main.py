@@ -1,5 +1,7 @@
 import sys
+import random
 import time
+# from Maze_Gen_Sol import in_use
 # import multiprocessing as mp
 # import classes
 from pathfinding import PathFinding
@@ -12,9 +14,12 @@ from map import Map
 import constants as const
 import pygame as pg
 
+# sys.path.insert(0, "./SearchAlgo")
+
 
 class Game:
     def __init__(self) -> None:
+        # in_use()
         pg.init()
         pg.font.init()
         self.screen: pg.surface.Surface = pg.display.set_mode(const.RESOLUTION)
@@ -31,7 +36,8 @@ class Game:
         self.raycasting: RayCasting = RayCasting(self)
         self.options: Options = Options(self.screen)
         self.pathfinding: PathFinding = PathFinding(self)
-        self.next_tile = self.pathfinding.get_path((2, 1), (7, 8))
+        self.searched_hostage = random.choice(list(self.map.hostages))
+        self.pathfinding_tile = None
 
     def update(self) -> None:
         self.player.movement()
@@ -40,10 +46,16 @@ class Game:
             self.raycasting.raycast()
         self.delta_time = self.clock.tick(const.FPS)
         pg.display.set_caption(f"{self.clock.get_fps() :.1f}")
-        self.next_tile = self.pathfinding.get_path(self.next_tile, (7, 8))
-        self.map.marked.add(self.next_tile)
-        print(f"{self.next_tile = }")
-        print(f"{self.map.map = }")
+        if self.map.marked:
+            self.show_path()
+
+    def show_path(self) -> None:
+        self.pathfinding_tile = self.pathfinding.get_path(
+            self.pathfinding_tile,
+            self.searched_hostage,
+        )
+        # print(f"{self.pathfinding_tile = }")
+        self.map.marked.add(self.pathfinding_tile)
 
     def check_events(self) -> None:
         for event in pg.event.get():

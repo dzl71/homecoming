@@ -1,3 +1,4 @@
+import random
 import sys
 import time
 import math
@@ -62,6 +63,19 @@ class Player:
                 self.game.options.displaying_map = False
             time.sleep(0.08)
 
+        if keys[pg.K_k]:
+            if self.game.options.pathfinding_usages > 0:
+                self.game.pathfinding_tile = self.game.pathfinding.get_path(
+                    (
+                        int(self.x),
+                        int(self.y)
+                    ),
+                    self.game.searched_hostage
+                )
+                # print(f"{self.game.pathfinding_tile = }")
+                self.game.map.marked.add(self.game.pathfinding_tile)
+                self.game.options.pathfinding_usages -= 1
+
         if keys[pg.K_ESCAPE]:
             pg.quit()
             sys.exit()
@@ -82,4 +96,10 @@ class Player:
         pos = (int(self.x), int(self.y))
         if pos in self.game.map.hostages:
             self.game.map.hostages.pop(pos)
+            self.game.pathfinding.graph.clear()
+            self.game.pathfinding.get_graph()
+            self.game.map.marked.clear()
+            self.game.searched_hostage = random.choice(
+                list(self.game.map.hostages)
+            )
             self.game.options.hostages_to_rescue -= 1

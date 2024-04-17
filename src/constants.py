@@ -1,8 +1,12 @@
+import platform
 import math
 
 WIDTH: int = 1080
-HALF_WIDTH: int = WIDTH // 2
 HEIGHT: int = 500
+if platform.system() == "Linux":
+    WIDTH = 1600
+    HEIGHT = 900
+HALF_WIDTH: int = WIDTH // 2
 HALF_HEIGHT: int = HEIGHT // 2
 RESOLUTION: tuple[int, int] = (WIDTH, HEIGHT)
 
