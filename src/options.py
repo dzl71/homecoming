@@ -9,6 +9,7 @@ class Options:
         self.time_left: int = const.GAME_TIME
         self.rescued_hostages: int = const.HOSTAGES_PLACED
         self.map_usages: int = 3
+        self.pathfinding_usages: int = 1
 
     def display_data(self) -> None:
         font = pg.font.SysFont(const.FONT, const.FONT_SIZE)
@@ -27,7 +28,12 @@ class Options:
                 f'Map usages: {self.map_usages}',
                 False,
                 (255, 255, 255)
-            )
+            ),
+            font.render(
+                f'PathFinding usages: {self.pathfinding_usages}',
+                False,
+                (255, 255, 255)
+            ),
         ]
         for idx, option in enumerate(options):
             self.screen.blit(option, (0, idx * const.FONT_SIZE))
