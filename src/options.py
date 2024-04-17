@@ -7,14 +7,14 @@ class Options:
         self.screen = screen
         self.displaying_map: bool = False
         self.time_left: int = const.GAME_TIME
-        self.rescued_hostages: int = const.HOSTAGES_PLACED
+        self.hostages_to_rescue: int = const.HOSTAGES_PLACED
         self.map_usages: int = 3
 
     def display_data(self) -> None:
         font = pg.font.SysFont(const.FONT, const.FONT_SIZE)
         options = [
             font.render(
-                f'Hostages rescued: {self.rescued_hostages}',
+                f'Hostages to rescue: {self.hostages_to_rescue}',
                 False,
                 (255, 255, 255)
             ),

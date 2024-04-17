@@ -82,4 +82,4 @@ class Player:
         pos = (int(self.x), int(self.y))
         if pos in self.game.map.hostages:
             self.game.map.hostages.pop(pos)
-            self.game.options.rescued_hostages -= 1
+            self.game.options.hostages_to_rescue -= 1

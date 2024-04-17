@@ -29,16 +29,18 @@ class ObjectRenderer:
             Image.open("resources/textures/1.png")
         )
         self.default_texture: int = 1
-        self.wall_textures: dict[int, pg.Surface] = {
-            1: self.get_texture("resources/textures/1.png"),
-            2: self.get_texture("resources/textures/right_wall.png"),
-            3: self.get_texture("resources/textures/left_wall.png"),
-
+        self.textures: dict[int, pg.Surface] = {
+            1: self.get_texture("resources/textures/1.png", (const.TEXTURE_SIZE, const.TEXTURE_SIZE)),
+            2: self.get_texture("resources/textures/right_wall.png", (const.TEXTURE_SIZE, const.TEXTURE_SIZE)),
+            3: self.get_texture("resources/textures/left_wall.png", (const.TEXTURE_SIZE, const.TEXTURE_SIZE)),
+            4: self.get_texture("resources/textures/133.png", (const.TEXTURE_SIZE, const.TEXTURE_SIZE)),
+            5: self.get_texture("resources/textures/bringthemhomenow.png", (const.TEXTURE_SIZE, const.TEXTURE_SIZE)),
 
             -1: self.get_texture(
                 "resources/sprites/mario.png",
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE)
             ),
+
         }
 
     @staticmethod
