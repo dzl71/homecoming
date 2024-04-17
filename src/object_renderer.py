@@ -162,3 +162,5 @@ class ObjectRenderer:
 
             # decrement to calculate next pixel
             pixel_position -= delta_pixel_position
+
+# comment to commit

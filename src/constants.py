@@ -117,3 +117,5 @@ MAP_HALF_WIDTH: int = math.ceil(HALF_WIDTH / MAP_SCALER)
 MAP_HALF_HEIGHT: int = math.ceil(HALF_HEIGHT / MAP_SCALER)
 
 MOUSE_SENSETIVITY: float = 1  # lower == faster
+
+# comment to add into commit
