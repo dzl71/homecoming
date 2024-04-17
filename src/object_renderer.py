@@ -26,20 +26,39 @@ class ObjectRenderer:
         self.map = game.map
         self.player = game.player
         self.screen = game.screen
+        self.path_extention = ""
+        self.set_textures()
+
+    def set_textures(self):
         self.floor_ceil_pixel_grid = split_pixel_grid(
-            Image.open("resources/textures/1.png")
+            Image.open(f"resources/textures/{self.path_extention}1.png")
         )
         self.marked_floor_ceil_pixel_grid = split_pixel_grid(
-            Image.open("resources/textures/marked_texture.png")
+            Image.open(
+                f"resources/textures/{self.path_extention}marked_texture.png")
         )
         self.default_texture: int = 1
         self.textures: dict[int, pg.Surface] = {
-            1: self.get_texture("resources/textures/1.png", (const.TEXTURE_SIZE, const.TEXTURE_SIZE)),
-            2: self.get_texture("resources/textures/right_wall.png", (const.TEXTURE_SIZE, const.TEXTURE_SIZE)),
-            3: self.get_texture("resources/textures/left_wall.png", (const.TEXTURE_SIZE, const.TEXTURE_SIZE)),
-            4: self.get_texture("resources/textures/133.png", (const.TEXTURE_SIZE, const.TEXTURE_SIZE)),
-            5: self.get_texture("resources/textures/bringthemhomenow.png", (const.TEXTURE_SIZE, const.TEXTURE_SIZE)),
-
+            1: self.get_texture(
+                f"resources/textures/{self.path_extention}1.png",
+                (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
+            ),
+            2: self.get_texture(
+                f"resources/textures/{self.path_extention}right_wall.png",
+                (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
+            ),
+            3: self.get_texture(
+                f"resources/textures/{self.path_extention}left_wall.png",
+                (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
+            ),
+            4: self.get_texture(
+                f"resources/textures/{self.path_extention}133.png",
+                (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
+            ),
+            5: self.get_texture(
+                f"resources/textures/{self.path_extention}bringthemhomenow.png",
+                (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
+            ),
             -1: self.get_texture(
                 "resources/sprites/mario.png",
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE)
