@@ -7,11 +7,8 @@ class Map:
         self.screen = game.screen
         self.player = game.player
         self.map = self.format_map(const.MAP)
-        self.walls = self.get_wall_positions()
-        self.marked = self.get_marked_positions()
-        self.floor = self.get_floor_positions()
-        self.hostages = self.get_hostage_positions()
-        print(f"{self.marked = }")
+        self.set_positions()
+        print(f"{self.hostages = }")
 
     def format_map(self, map_) -> list[str]:
         formatted_map: list[list[int]] = []
@@ -22,37 +19,22 @@ class Map:
                     formatted_row.append(const.MAP_SYMBOL_MEANING[symbol])
             formatted_map.append(formatted_row)
         return formatted_map
-    def get_floor_positions(self) -> dict[tuple[int, int], int]:
-        floor_positoins: dict[tuple[int, int], int] = {}
-        for row_idx, row in enumerate(self.map):
-            for tile_idx, tile in enumerate(row):
-                if tile == 0:
-                    floor_positoins[(tile_idx, row_idx)] = tile
-        return floor_positoins
 
-    def get_wall_positions(self) -> dict[tuple[int, int], int]:
-        wall_positoins: dict[tuple[int, int], int] = {}
+    def set_positions(self) -> set[tuple[int, int]]:
+        self.marked: set[tuple[int, int]] = set()
+        self.walls: dict[tuple[int, int], int] = {}
+        self.floor: dict[tuple[int, int], int] = {}
+        self.hostages: dict[tuple[int, int], int] = {}
         for row_idx, row in enumerate(self.map):
             for tile_idx, tile in enumerate(row):
                 if tile > 0:
-                    wall_positoins[(tile_idx, row_idx)] = tile
-        return wall_positoins
-
-    def get_hostage_positions(self) -> dict[tuple[int, int], int]:
-        hostage_positoins: dict[tuple[int, int], int] = {}
-        for row_idx, row in enumerate(self.map):
-            for tile_idx, tile in enumerate(row):
+                    self.walls[(tile_idx, row_idx)] = tile
+                if tile == 0:
+                    self.floor[(tile_idx, row_idx)] = tile
                 if tile == -1:
-                    hostage_positoins[(tile_idx, row_idx)] = tile
-        return hostage_positoins
-
-    def get_marked_positions(self) -> set[tuple[int, int]]:
-        marked_positoins: set[tuple[int, int]] = set()
-        for row_idx, row in enumerate(self.map):
-            for tile_idx, tile in enumerate(row):
+                    self.hostages[(tile_idx, row_idx)] = tile
                 if tile == -2:
-                    marked_positoins.add((tile_idx, row_idx))
-        return marked_positoins
+                    self.marked.add((tile_idx, row_idx))
 
     def draw_static(self, positions, color, origin_pos) -> tuple[int, int]:
         left_bound = int(self.player.x) - const.MAP_HALF_WIDTH
