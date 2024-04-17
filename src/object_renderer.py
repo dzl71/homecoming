@@ -23,10 +23,14 @@ def split_pixel_grid(image: Image.Image):
 
 class ObjectRenderer:
     def __init__(self, game) -> None:
+        self.map = game.map
         self.player = game.player
         self.screen = game.screen
         self.floor_ceil_pixel_grid = split_pixel_grid(
             Image.open("resources/textures/1.png")
+        )
+        self.marked_floor_ceil_pixel_grid = split_pixel_grid(
+            Image.open("resources/textures/marked_texture.png")
         )
         self.default_texture: int = 1
         self.textures: dict[int, pg.Surface] = {
@@ -105,7 +109,7 @@ class ObjectRenderer:
             ray_angle
     ) -> None:
         pixel_position = const.HEIGHT
-        delta_pixel_position = 3
+        delta_pixel_position = 2
         cos_a: float = math.cos(ray_angle)
         sin_a: float = math.sin(ray_angle)
         # Continue to calculate pixels while on screen
@@ -139,7 +143,7 @@ class ObjectRenderer:
             # Find corresponding color
             color = self.floor_ceil_pixel_grid[texture_x][texture_y]
 
-            # Fill in the pixel
+            # fill ceil pixel
             self.screen.fill(
                 color,
                 (
@@ -149,6 +153,11 @@ class ObjectRenderer:
                     delta_pixel_position
                 )
             )
+
+            if (int(floor_intersection_x), int(floor_intersection_y)) in self.map.marked:
+                color = self.marked_floor_ceil_pixel_grid[texture_x][texture_y]
+
+            # fill floor pixel
             self.screen.fill(
                 color,
                 (
