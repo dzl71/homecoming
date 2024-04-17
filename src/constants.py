@@ -4,8 +4,8 @@ import math
 WIDTH: int = 1080
 HEIGHT: int = 500
 if platform.system() == "Linux":
-    WIDTH = 1600
-    HEIGHT = 900
+    WIDTH = 1900
+    HEIGHT = 1000
 HALF_WIDTH: int = WIDTH // 2
 HALF_HEIGHT: int = HEIGHT // 2
 RESOLUTION: tuple[int, int] = (WIDTH, HEIGHT)
@@ -108,14 +108,20 @@ LONGEST_DISTANCE: float = math.sqrt(
     len(MAP)**2 + (len(MAP[0]) / MAP_WIDTH_MITIGATION)**2
 )
 
-GAME_TIME: int = 350  # in seconds
-FONT = 'Comic Sans MS'
-FONT_SIZE = 30
+GAME_TIME: int = 150  # in seconds
+FONT = 'JetBrains mono nerd'
+FONT_SIZE = 40
 
 MAP_SCALER: int = 100
 MAP_HALF_WIDTH: int = math.ceil(HALF_WIDTH / MAP_SCALER)
 MAP_HALF_HEIGHT: int = math.ceil(HALF_HEIGHT / MAP_SCALER)
 
 MOUSE_SENSETIVITY: float = 1  # lower == faster
+
+FAIL_MAIN_MESSAGE = "MISSION FAILED"
+FAIL_SUB_MESSAGE = "Failed to rescue hostages on time"
+
+SUCCESS_MAIN_MESSAGE = "MISSION SUCCESSFUL"
+SUCCESS_SUB_MESSAGE = "All hostages rescued!"
 
 # comment to add into commit
