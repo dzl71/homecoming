@@ -55,7 +55,7 @@ class Player:
 
         self.angle %= math.tau
 
-        if keys[pg.K_m]:
+        if keys[pg.K_v]:
             if not self.game.options.displaying_map and self.game.options.map_usages > 0:
                 self.game.options.displaying_map = True
                 self.game.options.map_usages -= 1
@@ -63,7 +63,7 @@ class Player:
                 self.game.options.displaying_map = False
             time.sleep(0.08)
 
-        if keys[pg.K_k]:
+        if keys[pg.K_f]:
             if self.game.options.pathfinding_usages > 0:
                 self.game.pathfinding_tile = self.game.pathfinding.get_path(
                     (
@@ -75,10 +75,6 @@ class Player:
                 # print(f"{self.game.pathfinding_tile = }")
                 self.game.map.marked.add(self.game.pathfinding_tile)
                 self.game.options.pathfinding_usages -= 1
-
-        if keys[pg.K_ESCAPE]:
-            pg.quit()
-            sys.exit()
 
         self.remove_colided_sprites()
 
