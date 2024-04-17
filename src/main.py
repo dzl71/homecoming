@@ -86,7 +86,7 @@ class Game:
     def opening_screen(self, sleep_time):
         self.screen.blit(
             self.object_renderer.get_texture(
-                "resources/BRING_THEM_HOME_NOW.jpg",
+                "resources/BRING_THEM_HOME_NOW_open.jpg",
                 const.RESOLUTION,
             ),
             (0, 0)
@@ -95,19 +95,16 @@ class Game:
         time.sleep(sleep_time)
 
     def end_screen(self):
-
         # blure the background
         self.object_renderer.path_extention = "blurred/"
         self.object_renderer.set_textures()
         self.raycasting.raycast()
-
         if self.options.hostages_to_rescue <= 0:
             main_text = const.SUCCESS_MAIN_MESSAGE
             sub_text = const.SUCCESS_SUB_MESSAGE
         else:
             main_text = const.FAIL_MAIN_MESSAGE
             sub_text = const.FAIL_SUB_MESSAGE
-
         # main text
         font_pos = (200, 200)
         font_size = const.FONT_SIZE * 5
@@ -120,7 +117,6 @@ class Game:
             ),
             font_pos
         )
-
         # sub text
         font_pos = (font_pos[0] + 250, font_pos[1] + font_size)
         font = pg.font.SysFont(const.FONT, const.FONT_SIZE * 3)
@@ -132,7 +128,6 @@ class Game:
             ),
             font_pos
         )
-
         font = pg.font.SysFont(const.FONT, const.FONT_SIZE)
         self.screen.blit(
             font.render(
@@ -142,7 +137,7 @@ class Game:
             ),
             (
                 const.WIDTH / 2 - 300, const.HEIGHT -
-                const.FONT_SIZE / 2 - 40 - const.FONT_SIZE
+                const.FONT_SIZE / 2 - 45 - const.FONT_SIZE
             )
         )
         self.screen.blit(
@@ -157,21 +152,53 @@ class Game:
         pg.display.flip()
 
     def display_menu(self):
-        font_pos = (const.HALF_WIDTH - 250, const.HEIGHT // 8)
-        font_size = const.FONT_SIZE * 6
-        font = pg.font.SysFont(const.FONT, font_size)
-        self.screen.fill('black', (0, 0, const.WIDTH, const.HEIGHT))
         self.screen.blit(
-            font.render(
-                "MENU",
-                False,
-                (255, 255, 255),
+            self.object_renderer.get_texture(
+                "resources/BRING_THEM_HOME_NOW_menu.png",
+                const.RESOLUTION
             ),
-            font_pos
+            (0, 0)
         )
-
+        font = pg.font.SysFont(const.FONT, const.FONT_SIZE * 2)
+        for idx, string in enumerate([
+            "- press space to start game",
+            "- press escape to quit game",
+        ]):
+            self.screen.blit(
+                font.render(
+                    string,
+                    False,
+                    (255, 255, 255)
+                ),
+                (const.HALF_WIDTH - 500, const.HEIGHT / 2 + const.HEIGHT / 3 * idx)
+            )
         pg.display.flip()
-        time.sleep(3)
+        while True:
+            key = pg.key.get_pressed()
+            # if key[pg.K_h]:
+            #     self.display_tutorial()
+            #    time.sleep(0.2)
+            if key[pg.K_SPACE]:
+                break
+            check_quit_events()
+
+    # def display_tutorial(self) -> None:
+    #     self.screen.fill("black", (0, 0, const.WIDTH, const.HEIGHT))
+    #     font = pg.font.SysFont(const.FONT, const.FONT_SIZE)
+    #     self.screen.blit(
+    #         font.render(
+    #             "press any key to return",
+    #             False,
+    #             (255, 255, 255),
+    #         ),
+    #         (const.WIDTH / 2 - 250, const.HEIGHT - const.FONT_SIZE / 2 - 40)
+    #     )
+    #     pg.display.flip()
+    #     waiting = True
+    #     while waiting:
+    #         for event in pg.event.get():
+    #             if event.type == pg.KEYDOWN:
+    #                 return None
 
 
 def check_quit_events() -> None:
