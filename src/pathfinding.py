@@ -5,7 +5,7 @@ class PathFinding:
     def __init__(self, game):
         self.game = game
         self.map = game.map.map
-        self.ways = [-1, 0], [0, -1], [1, 0], [0, 1], [-1, -1], [1, -1], [1, 1], [-1, 1]
+        self.ways = [-1, 0], [0, -1], [1, 0], [0, 1]
         self.graph = {}
         self.get_graph()
 
@@ -36,11 +36,15 @@ class PathFinding:
         return visited
 
     def get_next_nodes(self, x, y):
-        return [(x + dx, y + dy) for dx, dy in self.ways if (x + dx, y + dy) in self.game.map.floor]
+        return [
+            (x + dx, y + dy) for dx, dy in self.ways
+            if (x + dx, y + dy) not in self.game.map.walls
+        ]
 
     def get_graph(self):
         for y, row in enumerate(self.map):
             for x, col in enumerate(row):
-                if col == 0:
+                if col <= 0:
                     self.graph[(x, y)] = self.graph.get(
-                        (x, y), []) + self.get_next_nodes(x, y)
+                        (x, y), []
+                    ) + self.get_next_nodes(x, y)
