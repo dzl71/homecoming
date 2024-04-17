@@ -8,7 +8,6 @@ class Map:
         self.player = game.player
         self.map = self.format_map(const.MAP)
         self.set_positions()
-        print(f"{self.hostages = }")
 
     def format_map(self, map_) -> list[str]:
         formatted_map: list[list[int]] = []
