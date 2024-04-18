@@ -170,10 +170,10 @@ class Game:
                     False,
                     (255, 255, 255)
                 ),
-                (const.HALF_WIDTH - 500, const.HEIGHT / 2 + const.HEIGHT / 3 * idx)
+                (const.HALF_WIDTH - 500, const.HEIGHT / 1.5 + const.HEIGHT / 8 * idx)
             )
-        pg.display.flip()
         while True:
+            pg.display.flip()
             key = pg.key.get_pressed()
             if key[pg.K_SPACE]:
                 break
@@ -217,9 +217,9 @@ class Game:
                 ),
                 (const.WIDTH / 10, const.HEIGHT / 10 + const.HEIGHT / 8 * (i + 1))
             )
-        pg.display.flip()
         waiting = True
         while waiting:
+            pg.display.flip()
             for event in pg.event.get():
                 if event.type == pg.KEYDOWN:
                     return None
