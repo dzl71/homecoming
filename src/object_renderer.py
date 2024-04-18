@@ -80,7 +80,7 @@ class ObjectRenderer:
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
             ),
             -1: self.get_texture(
-                "resources/sprites/prisoner.png",
+                f"resources/sprites/{self.path_extention}prisoner.png",
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE)
             ),
         }
