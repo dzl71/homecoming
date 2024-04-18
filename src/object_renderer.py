@@ -87,6 +87,14 @@ class ObjectRenderer:
                 f"resources/textures/{self.path_extention}avinatan.png",
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
             ),
+            13: self.get_texture(
+                f"resources/textures/{self.path_extention}eden.png",
+                (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
+            ),
+            14: self.get_texture(
+                f"resources/textures/{self.path_extention}danzig.png",
+                (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
+            ),
             -1: self.get_texture(
                 f"resources/sprites/{self.path_extention}prisoner.png",
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE)
