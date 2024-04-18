@@ -59,6 +59,14 @@ class ObjectRenderer:
                 f"resources/textures/{self.path_extention}bringthemhomenow.png",
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
             ),
+            7: self.get_texture(
+                f"resources/textures/{self.path_extention}deadend.png",
+                (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
+            ),
+            8: self.get_texture(
+                f"resources/textures/{self.path_extention}emptiness.png",
+                (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
+            ),
             -1: self.get_texture(
                 "resources/sprites/prisoner.png",
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE)
