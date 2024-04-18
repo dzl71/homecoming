@@ -59,6 +59,10 @@ class ObjectRenderer:
                 f"resources/textures/{self.path_extention}bringthemhomenow.png",
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
             ),
+            6: self.get_texture(
+                f"resources/textures/{self.path_extention}3.png",
+                (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
+            ),
             7: self.get_texture(
                 f"resources/textures/{self.path_extention}deadend.png",
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
@@ -67,8 +71,12 @@ class ObjectRenderer:
                 f"resources/textures/{self.path_extention}emptiness.png",
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
             ),
-            6: self.get_texture(
-                f"resources/textures/{self.path_extention}3.png",
+            9: self.get_texture(
+                f"resources/textures/bibas.png",
+                (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
+            ),
+            10: self.get_texture(
+                f"resources/textures/amit.png",
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
             ),
             -1: self.get_texture(
