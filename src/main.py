@@ -175,30 +175,54 @@ class Game:
         pg.display.flip()
         while True:
             key = pg.key.get_pressed()
-            # if key[pg.K_h]:
-            #     self.display_tutorial()
-            #    time.sleep(0.2)
             if key[pg.K_SPACE]:
                 break
             check_quit_events()
 
-    # def display_tutorial(self) -> None:
-    #     self.screen.fill("black", (0, 0, const.WIDTH, const.HEIGHT))
-    #     font = pg.font.SysFont(const.FONT, const.FONT_SIZE)
-    #     self.screen.blit(
-    #         font.render(
-    #             "press any key to return",
-    #             False,
-    #             (255, 255, 255),
-    #         ),
-    #         (const.WIDTH / 2 - 250, const.HEIGHT - const.FONT_SIZE / 2 - 40)
-    #     )
-    #     pg.display.flip()
-    #     waiting = True
-    #     while waiting:
-    #         for event in pg.event.get():
-    #             if event.type == pg.KEYDOWN:
-    #                 return None
+    def display_tutorial(self) -> None:
+        self.screen.fill("black", (0, 0, const.WIDTH, const.HEIGHT))
+        font = pg.font.SysFont(const.FONT, const.FONT_SIZE)
+        self.screen.blit(
+            font.render(
+                "press any key to continue",
+                False,
+                (255, 255, 255),
+            ),
+            (const.WIDTH / 2 - 250, const.HEIGHT - const.FONT_SIZE / 2 - 40)
+        )
+        font = pg.font.SysFont(const.FONT, const.FONT_SIZE * 3)
+        self.screen.blit(
+            font.render(
+                'Controls',
+                False,
+                (255, 255, 255),
+            ),
+            (const.WIDTH / 2 - 150, const.HEIGHT / 10)
+        )
+        messages = [
+            '- W/A/S/D to move forward/left/backwards/right respectively',
+            '- use the mouse or the "<-" "->" keys to rotate the camera',
+            '- press the "v" key to [v]iew the map',
+            '- press the "f" key to [f]ind the the closest path to a hostage',
+            '- you will see in the top left angle of the screen additional info',
+            '- press the escape key to exit the game',
+        ]
+        font = pg.font.SysFont(const.FONT, const.FONT_SIZE * 1)
+        for i, message in enumerate(messages):
+            self.screen.blit(
+                font.render(
+                    message,
+                    False,
+                    (255, 255, 255),
+                ),
+                (const.WIDTH / 10, const.HEIGHT / 10 + const.HEIGHT / 8 * (i + 1))
+            )
+        pg.display.flip()
+        waiting = True
+        while waiting:
+            for event in pg.event.get():
+                if event.type == pg.KEYDOWN:
+                    return None
 
 
 def check_quit_events() -> None:
@@ -213,6 +237,7 @@ if __name__ == '__main__':
     while True:
         game.opening_screen(3)
         game.display_menu()
+        game.display_tutorial()
         game.run()
 
         while not pg.key.get_pressed()[pg.K_SPACE]:
