@@ -59,6 +59,10 @@ class ObjectRenderer:
                 f"resources/textures/{self.path_extention}bringthemhomenow.png",
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
             ),
+            6: self.get_texture(
+                f"resources/textures/{self.path_extention}3.png",
+                (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
+            ),
             -1: self.get_texture(
                 "resources/sprites/mario.png",
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE)

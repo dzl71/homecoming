@@ -13,7 +13,7 @@ RESOLUTION: tuple[int, int] = (WIDTH, HEIGHT)
 FPS: int = 60
 
 MAP = [
-    "################################",
+    "##MM############################",
     "##            bb##    ##      ##",
     "##            tt##  LL##  LL####",  # (2,1)
     "##                            ##",
@@ -78,6 +78,7 @@ MAP_SYMBOL_MEANING = {
     'o': -1,
     't': 4,
     'b': 5,
+    'M': 6,
 }
 
 HOSTAGES_PLACED: int = 4
@@ -123,5 +124,8 @@ FAIL_SUB_MESSAGE = "Failed to rescue hostages on time"
 
 SUCCESS_MAIN_MESSAGE = "MISSION SUCCESSFUL"
 SUCCESS_SUB_MESSAGE = "All hostages rescued!"
+
+CRIT_COLOR = (255, 0, 0)
+REGULAR_COLOR = (255, 255, 255)
 
 # comment to add into commit
