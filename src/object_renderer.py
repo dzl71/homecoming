@@ -72,11 +72,11 @@ class ObjectRenderer:
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
             ),
             9: self.get_texture(
-                f"resources/textures/bibas.png",
+                f"resources/textures/{self.path_extention}bibas.png",
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
             ),
             10: self.get_texture(
-                f"resources/textures/amit.png",
+                f"resources/textures/{self.path_extention}amit.png",
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
             ),
             -1: self.get_texture(
