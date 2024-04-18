@@ -13,9 +13,9 @@ RESOLUTION: tuple[int, int] = (WIDTH, HEIGHT)
 FPS: int = 60
 
 MAP = [
-    "##########AAbb########DD########",
-    "##            BB##    ##      DD",
-    "##            tt##  LL##  LLMMMM",  # (2,1)
+    "##########AAbb##################",
+    "##            BB##    DD##    DD",
+    "##            tt##  LL####  LLMM",  # (2,1)
     "##                            ##",
     "######################  RR  RR##",
     "###DD#######bbNN######  ##  ####",
