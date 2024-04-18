@@ -64,7 +64,7 @@ class ObjectRenderer:
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
             ),
             -1: self.get_texture(
-                "resources/sprites/mario.png",
+                "resources/sprites/prisoner.png",
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE)
             ),
         }
