@@ -79,6 +79,14 @@ class ObjectRenderer:
                 f"resources/textures/{self.path_extention}amit.png",
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
             ),
+            11: self.get_texture(
+                f"resources/textures/{self.path_extention}noa.png",
+                (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
+            ),
+            12: self.get_texture(
+                f"resources/textures/{self.path_extention}avinatan.png",
+                (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
+            ),
             -1: self.get_texture(
                 f"resources/sprites/{self.path_extention}prisoner.png",
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE)
