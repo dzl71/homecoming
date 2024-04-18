@@ -9,6 +9,7 @@ from object_renderer import ObjectRenderer
 from options import Options
 from raycasting import RayCasting
 from player import Player
+from music import Music
 from map import Map
 # import modules
 import constants as const
@@ -95,19 +96,22 @@ class Game:
         time.sleep(sleep_time)
 
     def end_screen(self):
+        # stop music
         # blure the background
         self.object_renderer.path_extention = "blurred/"
         self.object_renderer.set_textures()
         self.raycasting.raycast()
         if self.options.hostages_to_rescue <= 0:
+            # self.music.play_vicory()
             main_text = const.SUCCESS_MAIN_MESSAGE
             sub_text = const.SUCCESS_SUB_MESSAGE
         else:
+            # self.music.p
             main_text = const.FAIL_MAIN_MESSAGE
             sub_text = const.FAIL_SUB_MESSAGE
         # main text
-        font_pos = (200, 200)
-        font_size = const.FONT_SIZE * 5
+        font_pos = (100, 200)
+        font_size = const.FONT_SIZE * 4
         font = pg.font.SysFont(const.FONT, font_size)
         self.screen.blit(
             font.render(
@@ -118,7 +122,7 @@ class Game:
             font_pos
         )
         # sub text
-        font_pos = (font_pos[0] + 250, font_pos[1] + font_size)
+        font_pos = (font_pos[0] + 100, font_pos[1] + font_size)
         font = pg.font.SysFont(const.FONT, const.FONT_SIZE * 3)
         self.screen.blit(
             font.render(
@@ -234,12 +238,15 @@ def check_quit_events() -> None:
 
 if __name__ == '__main__':
     game = Game()
+    music: Music = Music()
+    music.play_music()
     while True:
+        music.rewind_music()
+
         game.opening_screen(3)
         game.display_menu()
         game.display_tutorial()
         game.run()
-
         while not pg.key.get_pressed()[pg.K_SPACE]:
             check_quit_events()
             game.end_screen()
