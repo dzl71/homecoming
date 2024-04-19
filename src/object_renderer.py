@@ -156,7 +156,7 @@ class ObjectRenderer:
             ray_angle
     ) -> None:
         pixel_position = const.HEIGHT
-        delta_pixel_position = 2
+        pixel_position_diff = 2  # the higher the number, the lower the quality
         cos_a: float = math.cos(ray_angle)
         sin_a: float = math.sin(ray_angle)
         # Continue to calculate pixels while on screen
@@ -170,7 +170,7 @@ class ObjectRenderer:
                 math.cos(ray_angle - self.player.angle)
 
             if actual_distance > const.MAX_RAY_DEPTH:
-                pixel_position += delta_pixel_position
+                pixel_position += pixel_position_diff
                 break
 
             # Calculate floor intersection
@@ -197,7 +197,7 @@ class ObjectRenderer:
                     ray * const.SCALE,
                     const.HEIGHT - pixel_position,
                     const.SCALE,
-                    delta_pixel_position
+                    pixel_position_diff
                 )
             )
 
@@ -211,11 +211,11 @@ class ObjectRenderer:
                     ray * const.SCALE,
                     pixel_position,
                     const.SCALE,
-                    delta_pixel_position
+                    pixel_position_diff
                 )
             )
 
             # decrement to calculate next pixel
-            pixel_position -= delta_pixel_position
+            pixel_position -= pixel_position_diff
 
 # commit
