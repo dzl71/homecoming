@@ -85,15 +85,16 @@ class Game:
                 break
 
     def opening_screen(self, sleep_time):
-        self.screen.blit(
-            self.object_renderer.get_texture(
-                f"{const.MENU_IMG_PATH}/BRING_THEM_HOME_NOW_open.jpg",
-                const.RESOLUTION,
-            ),
-            (0, 0)
-        )
-        pg.display.flip()
-        time.sleep(sleep_time)
+        t = time.time()
+        while time.time() - t < sleep_time:
+            self.screen.blit(
+                self.object_renderer.get_texture(
+                    f"{const.MENU_IMG_PATH}/BRING_THEM_HOME_NOW_open.jpg",
+                    const.RESOLUTION,
+                ),
+                (0, 0)
+            )
+            pg.display.flip()
 
     def end_screen(self):
         # stop music
