@@ -71,11 +71,11 @@ MAP = [
 MAP_WIDTH_MITIGATION: int = 2
 
 MAP_SYMBOL_MEANING = {
-    '#': 1,
+    'o': -1,
     " ": 0,
+    '#': 1,
     'R': 2,
     'L': 3,
-    'o': -1,
     't': 4,
     'b': 5,
     'M': 6,
