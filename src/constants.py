@@ -137,6 +137,7 @@ CRIT_COLOR = (255, 0, 0)
 REGULAR_COLOR = (255, 255, 255)
 
 TEXTURES_PATH = '../resources/textures'
+MENU_IMG_PATH = '../resources/menu_img'
 SPRITES_PATH = '../resources/sprites'
 SOUNDS_PATH = '../resources/sounds'
 

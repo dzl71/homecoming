@@ -87,7 +87,7 @@ class Game:
     def opening_screen(self, sleep_time):
         self.screen.blit(
             self.object_renderer.get_texture(
-                "resources/BRING_THEM_HOME_NOW_open.jpg",
+                f"{const.MENU_IMG_PATH}/BRING_THEM_HOME_NOW_open.jpg",
                 const.RESOLUTION,
             ),
             (0, 0)
@@ -158,7 +158,7 @@ class Game:
     def display_menu(self):
         self.screen.blit(
             self.object_renderer.get_texture(
-                "resources/BRING_THEM_HOME_NOW_menu.png",
+                f"{const.MENU_IMG_PATH}/BRING_THEM_HOME_NOW_menu.png",
                 const.RESOLUTION
             ),
             (0, 0)
