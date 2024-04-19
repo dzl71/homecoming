@@ -136,4 +136,8 @@ SUCCESS_SUB_MESSAGE = "All hostages rescued!"
 CRIT_COLOR = (255, 0, 0)
 REGULAR_COLOR = (255, 255, 255)
 
+TEXTURES_PATH = 'resources/textures'
+SPRITES_PATH = 'resources/sprites'
+SOUNDS_PATH = 'resources/sounds'
+
 # commit

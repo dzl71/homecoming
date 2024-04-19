@@ -1,9 +1,10 @@
+import constants as const
 import pygame as pg
 
 
 class Music:
     def __init__(self) -> None:
-        self.music = "resources/sounds/war-song.mp3"
+        self.music = f"{const.SOUNDS_PATH}/war-song.mp3"
         self.playing_music: bool = False
         pg.mixer.init()
 

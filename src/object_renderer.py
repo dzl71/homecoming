@@ -31,72 +31,72 @@ class ObjectRenderer:
 
     def set_textures(self):
         self.floor_ceil_pixel_grid = split_pixel_grid(
-            Image.open(f"resources/textures/{self.path_extention}1.png")
+            Image.open(f"{const.TEXTURES_PATH}/{self.path_extention}1.png")
         )
         self.marked_floor_ceil_pixel_grid = split_pixel_grid(
             Image.open(
-                f"resources/textures/{self.path_extention}marked_texture.png")
+                f"{const.TEXTURES_PATH}/{self.path_extention}marked_texture.png")
         )
         self.default_texture: int = 1
         self.textures: dict[int, pg.Surface] = {
             1: self.get_texture(
-                f"resources/textures/{self.path_extention}1.png",
+                f"{const.TEXTURES_PATH}/{self.path_extention}1.png",
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
             ),
             2: self.get_texture(
-                f"resources/textures/{self.path_extention}right_wall.png",
+                f"{const.TEXTURES_PATH}/{self.path_extention}right_wall.png",
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
             ),
             3: self.get_texture(
-                f"resources/textures/{self.path_extention}left_wall.png",
+                f"{const.TEXTURES_PATH}/{self.path_extention}left_wall.png",
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
             ),
             4: self.get_texture(
-                f"resources/textures/{self.path_extention}133.png",
+                f"{const.TEXTURES_PATH}/{self.path_extention}133.png",
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
             ),
             5: self.get_texture(
-                f"resources/textures/{self.path_extention}bringthemhomenow.png",
+                f"{const.TEXTURES_PATH}/{self.path_extention}bringthemhomenow.png",
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
             ),
             6: self.get_texture(
-                f"resources/textures/{self.path_extention}3.png",
+                f"{const.TEXTURES_PATH}/{self.path_extention}3.png",
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
             ),
             7: self.get_texture(
-                f"resources/textures/{self.path_extention}deadend.png",
+                f"{const.TEXTURES_PATH}/{self.path_extention}deadend.png",
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
             ),
             8: self.get_texture(
-                f"resources/textures/{self.path_extention}emptiness.png",
+                f"{const.TEXTURES_PATH}/{self.path_extention}emptiness.png",
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
             ),
             9: self.get_texture(
-                f"resources/textures/{self.path_extention}bibas.png",
+                f"{const.TEXTURES_PATH}/{self.path_extention}bibas.png",
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
             ),
             10: self.get_texture(
-                f"resources/textures/{self.path_extention}amit.png",
+                f"{const.TEXTURES_PATH}/{self.path_extention}amit.png",
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
             ),
             11: self.get_texture(
-                f"resources/textures/{self.path_extention}noa.png",
+                f"{const.TEXTURES_PATH}/{self.path_extention}noa.png",
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
             ),
             12: self.get_texture(
-                f"resources/textures/{self.path_extention}avinatan.png",
+                f"{const.TEXTURES_PATH}/{self.path_extention}avinatan.png",
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
             ),
             13: self.get_texture(
-                f"resources/textures/{self.path_extention}eden.png",
+                f"{const.TEXTURES_PATH}/{self.path_extention}eden.png",
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
             ),
             14: self.get_texture(
-                f"resources/textures/{self.path_extention}danzig.png",
+                f"{const.TEXTURES_PATH}/{self.path_extention}danzig.png",
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE),
             ),
             -1: self.get_texture(
-                f"resources/sprites/{self.path_extention}prisoner.png",
+                f"{const.SPRITES_PATH}/{self.path_extention}prisoner.png",
                 (const.TEXTURE_SIZE, const.TEXTURE_SIZE)
             ),
         }
