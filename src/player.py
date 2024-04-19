@@ -64,18 +64,34 @@ class Player:
 
         if keys[pg.K_f]:
             if self.game.options.pathfinding_usages > 0:
-                self.game.pathfinding_tile = self.game.pathfinding.get_path(
-                    (
-                        int(self.x),
-                        int(self.y)
-                    ),
-                    self.game.searched_hostage
-                )
-                # print(f"{self.game.pathfinding_tile = }")
-                self.game.map.marked.add(self.game.pathfinding_tile)
-                self.game.options.pathfinding_usages -= 1
+                self.find_path()
 
         self.remove_colided_sprites()
+
+    def find_path(self) -> None:
+        pos = (
+            int(self.x),
+            int(self.y),
+        )
+        movements = [
+            (-1, 0),  # left
+            (0, -1),  # up
+            (0, 1),  # down
+            (1, 0),  # right
+        ]
+        for movement in movements:
+            if pos not in self.game.map.walls:
+                break
+            pos = (
+                pos[0] + movement[0],
+                pos[1] + movement[1],
+            )
+        self.game.pathfinding_tile = self.game.pathfinding.get_path(
+            pos,
+            self.game.searched_hostage
+        )
+        self.game.map.marked.add(self.game.pathfinding_tile)
+        self.game.options.pathfinding_usages -= 1
 
     def check_wall(self, x: int, y: int) -> bool:
         return (x, y) not in self.game.map.walls
