@@ -112,7 +112,7 @@ class Player:
             self.game.map.marked.clear()
             self.game.searched_hostage = random.choice(
                 list(self.game.map.hostages)
-            )
+            ) if self.game.map.hostages else None
             self.game.options.hostages_to_rescue -= 1
 
 # comment to commit
